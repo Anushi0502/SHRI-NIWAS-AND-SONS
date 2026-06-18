@@ -1,0 +1,11 @@
+def test_ui_modules_import_cleanly():
+    import shreenivas_sons.app
+    import shreenivas_sons.ui.main_window
+    import shreenivas_sons.ui.pages.backup_page
+    import shreenivas_sons.ui.pages.company_page
+    import shreenivas_sons.ui.pages.dashboard_page
+    import shreenivas_sons.ui.pages.daybook_page
+    import shreenivas_sons.ui.pages.invoice_page
+    import shreenivas_sons.ui.pages.ledger_page
+    import shreenivas_sons.ui.pages.reports_page
+    import shreenivas_sons.ui.pages.voucher_page

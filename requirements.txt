@@ -1,0 +1,5 @@
+PyQt5==5.15.11
+openpyxl
+reportlab
+pytest
+

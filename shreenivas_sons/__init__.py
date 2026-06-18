@@ -1,0 +1,2 @@
+"""Shreenivas & Sons accounting application."""
+

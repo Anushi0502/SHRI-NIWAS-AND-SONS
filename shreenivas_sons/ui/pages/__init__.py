@@ -1,0 +1,2 @@
+"""Individual application pages."""
+

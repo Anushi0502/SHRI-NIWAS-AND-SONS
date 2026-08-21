@@ -113,7 +113,7 @@ export default function InventoryPage() {
     <div className="space-y-6">
       <PageHeader
         title="Inventory"
-        subtitle="Items, stock groups, units, HSN/SAC mapping, and stock movement tracking."
+        subtitle="Items, stock groups, units, tax codes, and stock movement tracking."
       />
 
       <div className="flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-soft">
@@ -121,7 +121,7 @@ export default function InventoryPage() {
           { key: "summary", label: "Summary" },
           { key: "groups", label: "Stock Groups" },
           { key: "units", label: "Units" },
-          { key: "hsn", label: "HSN / SAC" },
+          { key: "hsn", label: "Tax Codes" },
           { key: "items", label: "Items" },
           { key: "movements", label: "Movements" },
         ].map((item) => (
@@ -232,14 +232,14 @@ export default function InventoryPage() {
 
       {tab === "hsn" ? (
         <EntityManager
-          title="HSN / SAC"
-          subtitle="Map tax rates to goods and services."
+          title="Tax Codes"
+          subtitle="Map sales tax rates to goods and services."
           columns={[
             { key: "code", label: "Code" },
             { key: "description", label: "Description" },
             { key: "itemType", label: "Type" },
-            { key: "gstRate", label: "GST %" },
-            { key: "cessRate", label: "Cess %" },
+            { key: "gstRate", label: "Sales Tax %" },
+            { key: "cessRate", label: "Local Tax %" },
             { key: "applicableFrom", label: "Applicable From", type: "date" },
           ]}
           fields={[
@@ -255,8 +255,8 @@ export default function InventoryPage() {
                 { label: "Service", value: "SERVICE" },
               ],
             },
-            { name: "gstRate", label: "GST Rate", type: "number", step: "0.01", defaultValue: 0 },
-            { name: "cessRate", label: "Cess Rate", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "gstRate", label: "Sales Tax Rate", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "cessRate", label: "Local Tax Rate", type: "number", step: "0.01", defaultValue: 0 },
             { name: "applicableFrom", label: "Applicable From", type: "date", required: true, defaultValue: formatDateInput(new Date()) },
           ]}
           loadData={(search) => resources.inventory.hsnSac.list(search)}
@@ -283,7 +283,7 @@ export default function InventoryPage() {
             { key: "sku", label: "SKU" },
             { key: "stockGroup", label: "Group", render: (row) => row.stockGroup?.name || "" },
             { key: "unit", label: "Unit", render: (row) => row.unit?.symbol || "" },
-            { key: "hsnSac", label: "HSN/SAC", render: (row) => row.hsnSac?.code || "" },
+            { key: "hsnSac", label: "Tax Code", render: (row) => row.hsnSac?.code || "" },
             { key: "currentQty", label: "Current Qty" },
             { key: "currentValuePaisa", label: "Value", type: "money" },
             { key: "isLowStock", label: "Low Stock", render: (row) => (row.isLowStock ? "Yes" : "No") },
@@ -291,15 +291,15 @@ export default function InventoryPage() {
           fields={[
             { name: "stockGroupId", label: "Stock Group", type: "select", options: stockGroupOptions },
             { name: "unitId", label: "Unit", type: "select", options: unitOptions },
-            { name: "hsnSacId", label: "HSN / SAC", type: "select", options: hsnOptions },
+            { name: "hsnSacId", label: "Tax Code", type: "select", options: hsnOptions },
             { name: "name", label: "Item Name", required: true },
             { name: "sku", label: "SKU", required: true },
             { name: "barcode", label: "Barcode" },
             { name: "openingStockQty", label: "Opening Stock Qty", type: "number", step: "0.01", defaultValue: 0 },
-            { name: "openingStockValuePaisa", label: "Opening Stock Value (rupees)", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "openingStockValuePaisa", label: "Opening Stock Value (USD)", type: "number", step: "0.01", defaultValue: 0 },
             { name: "lowStockLevelQty", label: "Low Stock Level", type: "number", step: "0.01", defaultValue: 0 },
-            { name: "purchaseRatePaisa", label: "Purchase Rate (rupees)", type: "number", step: "0.01", defaultValue: 0 },
-            { name: "salesRatePaisa", label: "Sales Rate (rupees)", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "purchaseRatePaisa", label: "Purchase Rate (USD)", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "salesRatePaisa", label: "Sales Rate (USD)", type: "number", step: "0.01", defaultValue: 0 },
             { name: "isGoods", label: "Goods Item", type: "checkbox" },
           ]}
           loadData={(search) => resources.inventory.items.list(search)}
@@ -352,8 +352,8 @@ export default function InventoryPage() {
             },
             { name: "movementDate", label: "Movement Date", type: "date", required: true, defaultValue: formatDateInput(new Date()) },
             { name: "quantity", label: "Quantity", type: "number", step: "0.01", required: true },
-            { name: "ratePaisa", label: "Rate (rupees)", type: "number", step: "0.01", defaultValue: 0 },
-            { name: "amountPaisa", label: "Amount (rupees)", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "ratePaisa", label: "Rate (USD)", type: "number", step: "0.01", defaultValue: 0 },
+            { name: "amountPaisa", label: "Amount (USD)", type: "number", step: "0.01", defaultValue: 0 },
             { name: "notes", label: "Notes", type: "textarea", fullWidth: true, rows: 3 },
           ]}
           loadData={() => resources.inventory.movements.list()}

@@ -26,7 +26,7 @@ export default function Topbar({ onOpenMenu }) {
             <Building2 className="h-4 w-4 shrink-0 text-accent-700" />
             <select
               value={activeCompanyId || ""}
-              onChange={(event) => activateCompany(Number(event.target.value))}
+              onChange={(event) => activateCompany(event.target.value)}
               className="min-w-0 flex-1 border-0 bg-transparent p-0 outline-none focus:shadow-none sm:max-w-[230px]"
             >
               <option value="" disabled>

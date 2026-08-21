@@ -46,19 +46,19 @@ export default function LedgersPage() {
         fields={[
           { name: "accountGroupId", label: "Account Group", type: "select", options: groupOptions, required: true },
           { name: "name", label: "Ledger Name", required: true },
-          { name: "openingBalancePaisa", label: "Opening Balance (in rupees)", type: "number", step: "0.01", defaultValue: 0 },
+          { name: "openingBalancePaisa", label: "Opening Balance (USD)", type: "number", step: "0.01", defaultValue: 0 },
           { name: "openingBalanceType", label: "Opening Type", type: "select", options: [
             { label: "Dr", value: "Dr" },
             { label: "Cr", value: "Cr" },
           ] },
           { name: "ledgerType", label: "Ledger Type" },
-          { name: "gstin", label: "GSTIN" },
-          { name: "pan", label: "PAN" },
+          { name: "gstin", label: "Tax ID" },
+          { name: "pan", label: "Business ID" },
           { name: "state", label: "State" },
           { name: "address", label: "Address", type: "textarea", rows: 3, fullWidth: true },
           { name: "phone", label: "Phone" },
           { name: "email", label: "Email", type: "email" },
-          { name: "creditLimitPaisa", label: "Credit Limit (rupees)", type: "number", step: "0.01" },
+          { name: "creditLimitPaisa", label: "Credit Limit (USD)", type: "number", step: "0.01" },
           { name: "isParty", label: "Party Ledger", type: "checkbox" },
         ]}
         loadData={(search) => resources.ledgers.list(search)}

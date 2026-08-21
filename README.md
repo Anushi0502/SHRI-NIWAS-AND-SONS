@@ -7,7 +7,7 @@ Single-page accounting demo built with React and Vite.
 - Company management
 - Ledgers and vouchers
 - Invoices and inventory
-- GST settings
+- US sales tax settings
 - Reports and dashboard views
 - Browser-persisted demo data
 

@@ -71,7 +71,7 @@ export default function GstPage() {
           });
         }
       } catch (error) {
-        toast.error(error.response?.data?.message || "Unable to load GST settings");
+        toast.error(error.response?.data?.message || "Unable to load tax settings");
       } finally {
         if (mounted) setLoading(false);
       }
@@ -85,7 +85,7 @@ export default function GstPage() {
 
   const detailCards = useMemo(
     () => [
-      { label: "GST Enabled", value: setting?.enabled ? "Yes" : "No", tone: setting?.enabled ? "accent" : "danger" },
+      { label: "Sales Tax Enabled", value: setting?.enabled ? "Yes" : "No", tone: setting?.enabled ? "accent" : "danger" },
       { label: "Registration", value: setting?.registrationType || "REGULAR" },
       { label: "Invoice Prefix", value: setting?.invoicePrefix || "-" },
       { label: "Next Invoice", value: String(setting?.nextInvoiceNumber || 1) },
@@ -107,16 +107,16 @@ export default function GstPage() {
       };
       const updated = await resources.gst.updateSetting(payload);
       setSetting(updated);
-      toast.success("GST settings saved");
+      toast.success("Tax settings saved");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Unable to save GST settings");
+      toast.error(error.response?.data?.message || "Unable to save tax settings");
     }
   }
 
   if (!activeCompany) {
     return (
       <div className="rounded-2xl border border-slate-200 bg-white p-8 text-sm text-slate-600 shadow-soft">
-        Select an active company to manage GST settings.
+        Select an active company to manage sales tax settings.
       </div>
     );
   }
@@ -126,8 +126,8 @@ export default function GstPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Tax Settings"
-        subtitle="Control tax handling, invoice sequencing, and supply logic for the active company."
+        title="Sales Tax Settings"
+        subtitle="Control tax handling, invoice sequencing, and state or local tax logic for the active company."
         actions={
           canModify
             ? [
@@ -161,14 +161,14 @@ export default function GstPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <label className="flex items-center gap-2 pt-5 text-sm text-slate-700">
               <input type="checkbox" {...register("enabled")} disabled={disabled} className="h-4 w-4 rounded border-slate-300" />
-              GST Enabled
+              Sales Tax Enabled
             </label>
             <label>
-              <span className="mb-1 block text-sm font-medium text-slate-700">Registration Type</span>
+              <span className="mb-1 block text-sm font-medium text-slate-700">Tax Profile</span>
               <select {...register("registrationType")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
                 <option value="REGULAR">Regular</option>
-                <option value="COMPOSITION">Composition</option>
-                <option value="UNREGISTERED">Unregistered</option>
+                <option value="COMPOSITION">Small seller</option>
+                <option value="UNREGISTERED">Not registered</option>
               </select>
             </label>
             <label>
@@ -176,7 +176,7 @@ export default function GstPage() {
               <input {...register("gstin")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" />
             </label>
             <label>
-              <span className="mb-1 block text-sm font-medium text-slate-700">Company State</span>
+              <span className="mb-1 block text-sm font-medium text-slate-700">Nexus State</span>
               <input {...register("companyState")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" />
             </label>
             <label>
@@ -188,16 +188,16 @@ export default function GstPage() {
               <input type="number" {...register("nextInvoiceNumber")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" />
             </label>
             <label>
-              <span className="mb-1 block text-sm font-medium text-slate-700">Place of Supply Logic</span>
+              <span className="mb-1 block text-sm font-medium text-slate-700">Tax Location Logic</span>
               <select {...register("placeOfSupplyLogic")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm">
                 <option value="STATE_BASED">State-based</option>
-                <option value="LEDGER_STATE">Ledger state</option>
+                <option value="LEDGER_STATE">Customer state</option>
                 <option value="MANUAL">Manual override</option>
               </select>
             </label>
             <label className="flex items-center gap-2 pt-5 text-sm text-slate-700">
               <input type="checkbox" {...register("reverseChargeEnabled")} disabled={disabled} className="h-4 w-4 rounded border-slate-300" />
-              Reverse charge enabled
+              Purchase tax adjustment enabled
             </label>
           </div>
         </form>
@@ -208,7 +208,7 @@ export default function GstPage() {
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
               <li>Sales tax is calculated using the configured rate.</li>
               <li>Invoice numbers are auto-sequenced from the prefix and next number.</li>
-              <li>Reverse charge is available for purchase invoices when enabled.</li>
+              <li>Purchase tax adjustments are available when enabled.</li>
             </ul>
           </div>
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft">
@@ -222,7 +222,7 @@ export default function GstPage() {
         </div>
       </div>
 
-      {loading ? <div className="text-sm text-slate-500">Loading GST settings...</div> : null}
+      {loading ? <div className="text-sm text-slate-500">Loading tax settings...</div> : null}
     </div>
   );
 }

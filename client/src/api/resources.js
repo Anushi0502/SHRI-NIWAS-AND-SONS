@@ -132,7 +132,13 @@ export const resources = {
         return clone(item);
       }),
     },
-    summary: () => ({ items: inventoryList("items").length }),
+    summary: () => inventoryList("items").map((item) => ({
+      ...item,
+      stockGroup: item.stockGroup || "General",
+      unit: item.unit || item.unitName || "ea",
+      currentValuePaisa: Number(item.currentValuePaisa || (item.currentQty || 0) * (item.purchaseRatePaisa || 0)),
+      isLowStock: Number(item.currentQty || 0) <= Number(item.lowStockLevelQty || 0),
+    })),
     lowStock: () => inventoryList("items").filter((item) => item.currentQty <= item.lowStockLevelQty),
   },
   gst: {

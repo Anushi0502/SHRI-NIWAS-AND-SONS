@@ -150,6 +150,7 @@ input[type="checkbox"] {
   }
 
   .surface-card {
+    min-width: 0;
     border-color: var(--gcs-border);
     border-radius: 20px;
     box-shadow: 0 14px 40px rgba(19, 42, 43, 0.065);
@@ -171,6 +172,7 @@ input[type="checkbox"] {
   }
 
   .data-table-shell {
+    min-width: 0;
     border-color: var(--gcs-border);
     border-radius: 20px;
     box-shadow: 0 14px 40px rgba(19, 42, 43, 0.055);

@@ -48,7 +48,7 @@ export default function DashboardPage() {
   const pieData = [
     { name: "Sales", value: dashboard.totalSalesPaisa / 100 },
     { name: "Purchases", value: dashboard.totalPurchasesPaisa / 100 },
-    { name: "GST", value: dashboard.gstPayablePaisa / 100 },
+    { name: "Sales Tax", value: dashboard.gstPayablePaisa / 100 },
   ];
 
   return (
@@ -65,7 +65,7 @@ export default function DashboardPage() {
         <StatCard label="Bank Balance" value={formatMoney(dashboard.bankBalancePaisa)} />
         <StatCard label="Receivables" value={formatMoney(dashboard.receivablesPaisa)} />
         <StatCard label="Payables" value={formatMoney(dashboard.payablesPaisa)} />
-        <StatCard label="GST Payable" value={formatMoney(dashboard.gstPayablePaisa)} tone="warning" />
+        <StatCard label="Sales Tax Due" value={formatMoney(dashboard.gstPayablePaisa)} tone="warning" />
         <StatCard label="Net Profit" value={formatMoney(dashboard.netProfitPaisa)} tone={dashboard.netProfitPaisa >= 0 ? "accent" : "danger"} />
       </div>
 

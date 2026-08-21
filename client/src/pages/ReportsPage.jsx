@@ -23,10 +23,10 @@ const reportCatalog = [
   { value: "payables", label: "Outstanding Payables", mode: "asOn", description: "Supplier dues as of a date." },
   { value: "customer-statement", label: "Customer Statement", mode: "ledger-range", description: "Ledger statement for a customer." },
   { value: "supplier-statement", label: "Supplier Statement", mode: "ledger-range", description: "Ledger statement for a supplier." },
-  { value: "gst-summary", label: "GST Summary", mode: "range", description: "Aggregate GST inputs and outputs." },
-  { value: "gstr1", label: "GSTR-1 Style", mode: "range", description: "Sales-oriented GST summary." },
-  { value: "gstr3b", label: "GSTR-3B Summary", mode: "range", description: "Return summary for tax payment." },
-  { value: "hsn-summary", label: "HSN/SAC Summary", mode: "range", description: "Taxable turnover by HSN/SAC." },
+  { value: "gst-summary", label: "Sales Tax Summary", mode: "range", description: "Aggregate sales tax inputs and outputs." },
+  { value: "gstr1", label: "Sales Tax Register", mode: "range", description: "Sales-oriented tax summary." },
+  { value: "gstr3b", label: "Tax Payment Snapshot", mode: "range", description: "Summary for tax payment planning." },
+  { value: "hsn-summary", label: "Tax Code Summary", mode: "range", description: "Taxable turnover by product tax code." },
   { value: "b2b-sales", label: "B2B Sales", mode: "range", description: "Business-to-business invoices." },
   { value: "b2c-sales", label: "B2C Sales", mode: "range", description: "Business-to-consumer invoices." },
   { value: "nil-rated", label: "Nil-rated Supply", mode: "range", description: "Zero-tax sales." },
@@ -39,7 +39,7 @@ function currencySummary(value) {
 }
 
 function invoiceRows(invoices) {
-  return invoices.map((invoice) => ({
+  return (Array.isArray(invoices) ? invoices : []).map((invoice) => ({
     invoiceDate: invoice.invoiceDate,
     invoiceNo: invoice.invoiceNo,
     party: invoice.partyLedger?.name || "",
@@ -182,7 +182,7 @@ export default function ReportsPage() {
             { key: "totalDebitPaisa", label: "Debit", type: "money" },
             { key: "totalCreditPaisa", label: "Credit", type: "money" },
           ]}
-          rows={reportData}
+          rows={Array.isArray(reportData) ? reportData : reportData.rows || []}
           emptyText="No voucher rows."
         />
       );
@@ -279,7 +279,7 @@ export default function ReportsPage() {
           columns={[
             { key: "ledgerName", label: "Ledger" },
             { key: "state", label: "State" },
-            { key: "gstin", label: "GSTIN" },
+            { key: "gstin", label: "Tax ID" },
             { key: "amountPaisa", label: "Amount", type: "money" },
           ]}
           rows={reportData.rows || []}
@@ -296,16 +296,16 @@ export default function ReportsPage() {
       return (
         <DataTable
           columns={[
-            { key: "hsnSacCode", label: "HSN/SAC" },
+            { key: "hsnSacCode", label: "Tax Code" },
             { key: "quantity", label: "Qty" },
             { key: "taxablePaisa", label: "Taxable", type: "money" },
-            { key: "cgstPaisa", label: "CGST", type: "money" },
-            { key: "sgstPaisa", label: "SGST", type: "money" },
-            { key: "igstPaisa", label: "IGST", type: "money" },
-            { key: "cessPaisa", label: "Cess", type: "money" },
+            { key: "cgstPaisa", label: "State Tax", type: "money" },
+            { key: "sgstPaisa", label: "Local Tax", type: "money" },
+            { key: "igstPaisa", label: "Other Tax", type: "money" },
+            { key: "cessPaisa", label: "Additional Tax", type: "money" },
           ]}
-          rows={reportData}
-          emptyText="No HSN rows."
+          rows={Array.isArray(reportData) ? reportData : reportData.rows || []}
+          emptyText="No tax code rows."
         />
       );
     }
@@ -329,7 +329,7 @@ export default function ReportsPage() {
           </ChartPanel>
 
           <div className="grid gap-6 xl:grid-cols-2">
-            <ChartPanel title="Purchase Invoices" subtitle="Purchase-side GST documents">
+            <ChartPanel title="Purchase Invoices" subtitle="Purchase-side tax documents">
               <DataTable
                 columns={[
                   { key: "invoiceDate", label: "Date" },
@@ -344,19 +344,19 @@ export default function ReportsPage() {
               />
             </ChartPanel>
 
-            <ChartPanel title="HSN / SAC Summary" subtitle="Taxable turnover by tax code">
+            <ChartPanel title="Tax Code Summary" subtitle="Taxable turnover by product tax code">
               <DataTable
                 columns={[
-                  { key: "hsnSacCode", label: "HSN/SAC" },
+                  { key: "hsnSacCode", label: "Tax Code" },
                   { key: "quantity", label: "Qty" },
                   { key: "taxablePaisa", label: "Taxable", type: "money" },
-                  { key: "cgstPaisa", label: "CGST", type: "money" },
-                  { key: "sgstPaisa", label: "SGST", type: "money" },
-                  { key: "igstPaisa", label: "IGST", type: "money" },
-                  { key: "cessPaisa", label: "Cess", type: "money" },
+                  { key: "cgstPaisa", label: "State Tax", type: "money" },
+                  { key: "sgstPaisa", label: "Local Tax", type: "money" },
+                  { key: "igstPaisa", label: "Other Tax", type: "money" },
+                  { key: "cessPaisa", label: "Additional Tax", type: "money" },
                 ]}
                 rows={reportData.hsnSummary || []}
-                emptyText="No HSN summary rows."
+                emptyText="No tax code summary rows."
               />
             </ChartPanel>
           </div>
@@ -445,7 +445,7 @@ export default function ReportsPage() {
     }
 
     if (selectedReport === "hsn-summary") {
-      return <StatCard label="HSN Rows" value={String(reportData.length || 0)} />;
+      return <StatCard label="Tax Code Rows" value={String(reportData.length || 0)} />;
     }
 
     if (["sales-register", "purchase-register", "b2b-sales", "b2c-sales", "nil-rated", "exempt", "reverse-charge"].includes(selectedReport)) {
@@ -588,7 +588,7 @@ export default function ReportsPage() {
             />
           </ChartPanel>
 
-          <ChartPanel title="Special GST Buckets" subtitle="B2B, B2C, nil-rated, exempt, and reverse charge slices">
+          <ChartPanel title="Special Tax Categories" subtitle="Business, consumer, zero-rated, exempt, and reverse-charge slices">
             <div className="space-y-3 text-sm text-slate-600">
               <div>B2B sales: {reportData.b2bSales?.length || 0}</div>
               <div>B2C sales: {reportData.b2cSales?.length || 0}</div>

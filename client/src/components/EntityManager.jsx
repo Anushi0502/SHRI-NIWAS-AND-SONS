@@ -110,18 +110,18 @@ export default function EntityManager({
           <h2 className="text-xl font-semibold text-slate-950">{title}</h2>
           {subtitle ? <p className="text-sm text-slate-500">{subtitle}</p> : null}
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex w-full items-center gap-2 sm:gap-3 md:w-auto">
           <input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={`Search ${title.toLowerCase()}`}
-            className="w-64 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm outline-none focus:border-accent-400"
+            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm outline-none focus:border-accent-400 md:w-64"
           />
           {canCreate ? (
             <button
               type="button"
               onClick={openCreate}
-              className="rounded-xl bg-slate-950 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              className="shrink-0 rounded-xl bg-slate-950 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
             >
               Add New
             </button>

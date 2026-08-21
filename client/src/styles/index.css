@@ -48,8 +48,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-input:not([type="checkbox"]),
-input:not([type="radio"]),
+input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
   min-height: 44px;
@@ -59,8 +58,7 @@ textarea {
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
-input:not([type="checkbox"]):focus,
-input:not([type="radio"]):focus,
+input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
 textarea:focus {
   border-color: rgba(15, 107, 99, 0.7);

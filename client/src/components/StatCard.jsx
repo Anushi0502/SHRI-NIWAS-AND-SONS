@@ -9,9 +9,12 @@ export default function StatCard({ label, value, helper, tone = "default" }) {
           : "from-slate-500/10 to-white border-slate-200";
 
   return (
-    <div className={`rounded-2xl border bg-gradient-to-br ${toneClasses} p-5 shadow-soft`}>
-      <div className="text-sm font-medium text-slate-500">{label}</div>
-      <div className="mt-2 text-2xl font-semibold text-slate-950">{value}</div>
+    <div className={`surface-card rounded-2xl border bg-gradient-to-br ${toneClasses} p-5`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className="text-sm font-semibold text-slate-500">{label}</div>
+        <span className="h-2.5 w-2.5 rounded-full bg-current opacity-30" />
+      </div>
+      <div className="mt-3 text-[1.75rem] font-bold tracking-tight text-slate-950">{value}</div>
       {helper ? <div className="mt-2 text-sm text-slate-500">{helper}</div> : null}
     </div>
   );

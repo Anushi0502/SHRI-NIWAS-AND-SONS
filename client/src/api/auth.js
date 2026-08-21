@@ -1,35 +1,27 @@
-import axios from "axios";
-import { http } from "./http";
 import { clearAccessToken, setAccessToken } from "./tokenStore";
-
-const rawHttp = axios.create({
-  baseURL: "/api",
-  withCredentials: true,
-});
+import { login as loginLocal, logout as logoutLocal, me as meLocal, refreshSession as refreshLocal, setActiveCompany as setActiveCompanyLocal } from "./localStore";
 
 export async function loginRequest(payload) {
-  const response = await rawHttp.post("/auth/login", payload);
-  setAccessToken(response.data.accessToken);
-  return response.data;
+  const response = await loginLocal(payload);
+  setAccessToken(response.accessToken);
+  return response;
 }
 
 export async function refreshSessionRequest() {
-  const response = await rawHttp.post("/auth/refresh");
-  setAccessToken(response.data.accessToken);
-  return response.data;
+  const response = await refreshLocal();
+  setAccessToken(response.accessToken);
+  return response;
 }
 
 export async function logoutRequest() {
-  await http.post("/auth/logout");
+  await logoutLocal();
   clearAccessToken();
 }
 
 export async function meRequest() {
-  const response = await http.get("/auth/me");
-  return response.data;
+  return meLocal();
 }
 
 export async function setActiveCompanyRequest(companyId) {
-  const response = await http.put("/auth/me/active-company", { companyId });
-  return response.data;
+  return setActiveCompanyLocal(companyId);
 }

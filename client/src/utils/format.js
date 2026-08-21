@@ -7,8 +7,8 @@ export function moneyToPaise(value) {
   return Math.round(amount * 100);
 }
 
-export function formatMoney(paise, currency = "INR") {
-  return new Intl.NumberFormat("en-IN", {
+export function formatMoney(paise, currency = "USD") {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency,
     maximumFractionDigits: 2,
@@ -18,9 +18,9 @@ export function formatMoney(paise, currency = "INR") {
 export function formatDate(value) {
   if (!value) return "";
   const date = new Date(value);
-  return new Intl.DateTimeFormat("en-GB", {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "2-digit",
     day: "2-digit",
-    month: "short",
     year: "numeric",
   }).format(date);
 }

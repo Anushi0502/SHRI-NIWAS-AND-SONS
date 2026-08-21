@@ -126,8 +126,8 @@ export default function GstPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="GST Settings"
-        subtitle="Control registration type, invoice sequencing, and supply logic for the active company."
+        title="Tax Settings"
+        subtitle="Control tax handling, invoice sequencing, and supply logic for the active company."
         actions={
           canModify
             ? [
@@ -154,8 +154,8 @@ export default function GstPage() {
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
         <form className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft space-y-5">
           <div>
-            <h3 className="text-lg font-semibold text-slate-950">GST Profile</h3>
-            <p className="text-sm text-slate-500">These settings drive invoice numbering and GST breakup logic.</p>
+            <h3 className="text-lg font-semibold text-slate-950">Tax Profile</h3>
+            <p className="text-sm text-slate-500">These settings drive invoice numbering and sales tax logic.</p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -172,7 +172,7 @@ export default function GstPage() {
               </select>
             </label>
             <label>
-              <span className="mb-1 block text-sm font-medium text-slate-700">GSTIN</span>
+              <span className="mb-1 block text-sm font-medium text-slate-700">Tax ID</span>
               <input {...register("gstin")} disabled={disabled} className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm" />
             </label>
             <label>
@@ -204,10 +204,9 @@ export default function GstPage() {
 
         <div className="space-y-4">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-soft">
-            <h3 className="text-lg font-semibold text-slate-950">GST Logic Notes</h3>
+            <h3 className="text-lg font-semibold text-slate-950">Tax Logic Notes</h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-600">
-              <li>Same-state sales use CGST + SGST.</li>
-              <li>Different-state sales use IGST.</li>
+              <li>Sales tax is calculated using the configured rate.</li>
               <li>Invoice numbers are auto-sequenced from the prefix and next number.</li>
               <li>Reverse charge is available for purchase invoices when enabled.</li>
             </ul>
@@ -217,7 +216,7 @@ export default function GstPage() {
             <div className="mt-4 space-y-2 text-sm text-slate-600">
               <div>Name: {activeCompany.name}</div>
               <div>State: {activeCompany.state || "-"}</div>
-              <div>GSTIN: {activeCompany.gstin || "-"}</div>
+              <div>Tax ID: {activeCompany.gstin || "-"}</div>
             </div>
           </div>
         </div>

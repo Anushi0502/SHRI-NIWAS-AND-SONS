@@ -32,7 +32,7 @@ export default function CompaniesPage() {
           { name: "state", label: "State", required: true },
           { name: "financialYearStart", label: "Financial Year Start", type: "date", required: true },
           { name: "financialYearEnd", label: "Financial Year End", type: "date", required: true },
-          { name: "currency", label: "Currency", defaultValue: "INR" },
+          { name: "currency", label: "Currency", defaultValue: "USD" },
         ]}
         loadData={() => resources.companies.list()}
         createRecord={(payload) => resources.companies.create(payload)}

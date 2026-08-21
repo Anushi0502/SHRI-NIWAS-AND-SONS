@@ -1,9 +1,9 @@
 const STORAGE_KEY = "global-creative-services-demo-state";
 
 const demoUsers = [
-  { id: "u1", name: "Admin User", email: "admin@shreenivas.local", password: "Admin@12345", role: "ADMIN" },
-  { id: "u2", name: "Accountant User", email: "accountant@shreenivas.local", password: "Accountant@12345", role: "ACCOUNTANT" },
-  { id: "u3", name: "Viewer User", email: "viewer@shreenivas.local", password: "Viewer@12345", role: "VIEWER" },
+  { id: "u1", name: "Admin User", email: "admin@globalcreative.local", password: "Admin@12345", role: "ADMIN" },
+  { id: "u2", name: "Accountant User", email: "accountant@globalcreative.local", password: "Accountant@12345", role: "ACCOUNTANT" },
+  { id: "u3", name: "Viewer User", email: "viewer@globalcreative.local", password: "Viewer@12345", role: "VIEWER" },
 ];
 
 function nowIso() {
@@ -25,10 +25,10 @@ function createSeedState() {
         email: "",
         gstin: "",
         pan: "",
-        state: "Maharashtra",
-        financialYearStart: "2026-04-01",
-        financialYearEnd: "2027-03-31",
-        currency: "INR",
+        state: "New York",
+        financialYearStart: "2026-01-01",
+        financialYearEnd: "2026-12-31",
+        currency: "USD",
         isActive: true,
       },
     ],
@@ -42,7 +42,7 @@ function createSeedState() {
       hsnSac: [{ id: "hsn1", code: "1000", description: "General Goods" }],
       items: [{ id: "item1", name: "Sample Item", sku: "SKU-1", currentQty: 12, lowStockLevelQty: 5 }],
       movements: [],
-      gstSetting: { id: "gst1", cgstRate: 9, sgstRate: 9, igstRate: 18 },
+      gstSetting: { id: "gst1", salesTaxRate: 8.875, taxRegion: "NYC" },
     },
   };
 }

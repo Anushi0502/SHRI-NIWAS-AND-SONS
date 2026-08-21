@@ -24,7 +24,7 @@ export default function LoginPage() {
   } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "admin@shreenivas.local",
+      email: "admin@globalcreative.local",
       password: "Admin@12345",
     },
   });
@@ -105,8 +105,8 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 rounded-2xl bg-slate-50 p-4 text-xs text-slate-500">
-            Demo users: admin@shreenivas.local / Admin@12345, accountant@shreenivas.local / Accountant@12345,
-            viewer@shreenivas.local / Viewer@12345.
+            Demo users: admin@globalcreative.local / Admin@12345, accountant@globalcreative.local / Accountant@12345,
+            viewer@globalcreative.local / Viewer@12345.
           </div>
         </div>
       </section>

@@ -1,9 +1,12 @@
 {
   "name": "shreenivas-accounts",
   "private": true,
+  "workspaces": [
+    "client"
+  ],
   "scripts": {
-    "dev": "npm --prefix client run dev",
-    "build": "npm --prefix client run build",
-    "preview": "npm --prefix client run preview"
+    "dev": "npm run dev --workspace client",
+    "build": "npm run build --workspace client",
+    "preview": "npm run preview --workspace client"
   }
 }

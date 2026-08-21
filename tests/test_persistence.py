@@ -9,7 +9,7 @@ def test_seed_data_creates_demo_company(tmp_path):
     seed_demo_data(service)
 
     companies = service.list_companies()
-    assert companies[0]["name"] == "Shreenivas & Sons"
+    assert companies[0]["name"] == "Global Creative Services"
 
     ledgers = service.list_ledgers(companies[0]["id"])
     ledger_names = {ledger["name"] for ledger in ledgers}

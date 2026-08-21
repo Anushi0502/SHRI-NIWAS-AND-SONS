@@ -22,4 +22,4 @@ def test_backup_and_restore_round_trip(tmp_path, sample_service):
 
     companies = sample_service.list_companies()
     assert len(companies) == 1
-    assert companies[0]["name"] == "Shreenivas & Sons"
+    assert companies[0]["name"] == "Global Creative Services"

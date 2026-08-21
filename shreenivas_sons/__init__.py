@@ -1,2 +1,1 @@
-"""Shreenivas & Sons accounting application."""
-
+"""Global Creative Services accounting application."""

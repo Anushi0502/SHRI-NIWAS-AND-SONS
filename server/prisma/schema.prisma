@@ -1,0 +1,450 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  ACCOUNTANT
+  VIEWER
+}
+
+enum VoucherType {
+  PAYMENT
+  RECEIPT
+  CONTRA
+  JOURNAL
+  SALES
+  PURCHASE
+  DEBIT_NOTE
+  CREDIT_NOTE
+  SALES_RETURN
+  PURCHASE_RETURN
+}
+
+enum RegistrationType {
+  REGULAR
+  COMPOSITION
+  UNREGISTERED
+}
+
+enum InvoiceType {
+  SALES
+  PURCHASE
+  SALES_RETURN
+  PURCHASE_RETURN
+}
+
+enum MovementType {
+  OPENING
+  PURCHASE_INWARD
+  SALES_OUTWARD
+  ADJUSTMENT
+}
+
+model User {
+  id               Int            @id @default(autoincrement())
+  name             String
+  email            String         @unique
+  passwordHash     String
+  role             UserRole       @default(VIEWER)
+  isActive         Boolean        @default(true)
+  activeCompanyId  Int?
+  lastLoginAt      DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  activeCompany    Company?       @relation("ActiveCompany", fields: [activeCompanyId], references: [id], onDelete: SetNull)
+  refreshTokens    RefreshToken[]
+  createdVouchers  Voucher[]      @relation("VoucherCreatedBy")
+  updatedVouchers  Voucher[]      @relation("VoucherUpdatedBy")
+  invoices         Invoice[]      @relation("InvoiceCreatedBy")
+  auditLogs        AuditLog[]
+  settings         Setting[]
+}
+
+model RefreshToken {
+  id                    Int       @id @default(autoincrement())
+  userId                Int
+  tokenHash             String    @unique
+  expiresAt             DateTime
+  revokedAt             DateTime?
+  replacedByTokenHash   String?
+  createdByIp           String?
+  userAgent             String?
+  createdAt             DateTime   @default(now())
+  user                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Company {
+  id                   Int             @id @default(autoincrement())
+  name                 String          @unique
+  address              String          @default("")
+  phone                String          @default("")
+  email                String          @default("")
+  gstin                String          @default("")
+  pan                  String          @default("")
+  state                String          @default("")
+  financialYearStart   DateTime
+  financialYearEnd     DateTime
+  currency             String          @default("INR")
+  isActive             Boolean         @default(true)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  activeUsers          User[]          @relation("ActiveCompany")
+  financialYears       FinancialYear[]
+  accountGroups        AccountGroup[]
+  ledgers              Ledger[]
+  vouchers             Voucher[]
+  invoices             Invoice[]
+  items                Item[]
+  stockGroups          StockGroup[]
+  units                Unit[]
+  stockMovements       StockMovement[]
+  hsnSacs              HsnSac[]
+  gstRates             GstRate[]
+  gstSetting           GstSetting?
+  settings             Setting[]
+  auditLogs            AuditLog[]
+}
+
+model FinancialYear {
+  id          Int       @id @default(autoincrement())
+  companyId   Int
+  label       String
+  startDate   DateTime
+  endDate     DateTime
+  isCurrent   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, isCurrent])
+  @@unique([companyId, startDate, endDate])
+}
+
+model AccountGroup {
+  id             Int       @id @default(autoincrement())
+  companyId      Int
+  name           String
+  parentName     String?
+  reportCategory String
+  isSystem       Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  company        Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  ledgers        Ledger[]
+
+  @@unique([companyId, name])
+  @@index([companyId, reportCategory])
+}
+
+model Ledger {
+  id                    Int           @id @default(autoincrement())
+  companyId             Int
+  accountGroupId        Int
+  name                  String
+  openingBalancePaisa   Int           @default(0)
+  openingBalanceType    String        @default("Dr")
+  ledgerType            String        @default("NORMAL")
+  gstin                 String        @default("")
+  pan                   String        @default("")
+  state                 String        @default("")
+  address               String        @default("")
+  phone                 String        @default("")
+  email                 String        @default("")
+  creditLimitPaisa      Int           @default(0)
+  isParty               Boolean       @default(false)
+  isActive              Boolean       @default(true)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  company               Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  accountGroup          AccountGroup   @relation(fields: [accountGroupId], references: [id])
+  voucherEntries        VoucherEntry[]
+  partyInvoices         Invoice[]     @relation("InvoicePartyLedger")
+
+  @@unique([companyId, name])
+  @@index([companyId, accountGroupId])
+}
+
+model HsnSac {
+  id             Int       @id @default(autoincrement())
+  companyId      Int
+  code           String
+  description    String
+  itemType       String
+  gstRate        Decimal   @db.Decimal(5, 2)
+  cessRate       Decimal   @db.Decimal(5, 2) @default(0)
+  applicableFrom DateTime
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  company        Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  items          Item[]
+  gstRates       GstRate[]
+
+  @@unique([companyId, code])
+}
+
+model GstRate {
+  id            Int       @id @default(autoincrement())
+  companyId     Int
+  hsnSacId      Int?
+  code          String
+  gstRate       Decimal   @db.Decimal(5, 2)
+  cessRate      Decimal   @db.Decimal(5, 2) @default(0)
+  effectiveFrom DateTime
+  effectiveTo   DateTime?
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  company       Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  hsnSac        HsnSac?   @relation(fields: [hsnSacId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, code])
+}
+
+model GstSetting {
+  id                   Int             @id @default(autoincrement())
+  companyId            Int             @unique
+  enabled              Boolean         @default(true)
+  gstin                String          @default("")
+  registrationType     RegistrationType @default(REGULAR)
+  companyState         String          @default("")
+  invoicePrefix        String          @default("INV")
+  nextInvoiceNumber    Int             @default(1)
+  placeOfSupplyLogic   String          @default("STATE_BASED")
+  reverseChargeEnabled Boolean         @default(false)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  company              Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model StockGroup {
+  id          Int       @id @default(autoincrement())
+  companyId   Int
+  name        String
+  parentName  String?
+  isSystem    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  items       Item[]
+
+  @@unique([companyId, name])
+}
+
+model Unit {
+  id            Int       @id @default(autoincrement())
+  companyId     Int
+  name          String
+  symbol        String
+  decimalPlaces Int       @default(2)
+  isSystem      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  company       Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  items         Item[]
+
+  @@unique([companyId, name])
+}
+
+model Item {
+  id                   Int            @id @default(autoincrement())
+  companyId           Int
+  stockGroupId        Int?
+  unitId              Int?
+  hsnSacId            Int?
+  name                String
+  sku                 String
+  barcode             String          @default("")
+  openingStockQty     Decimal         @db.Decimal(18, 4) @default(0)
+  openingStockValuePaisa Int          @default(0)
+  lowStockLevelQty    Decimal         @db.Decimal(18, 4) @default(0)
+  purchaseRatePaisa   Int             @default(0)
+  salesRatePaisa     Int             @default(0)
+  isGoods             Boolean         @default(true)
+  isActive            Boolean         @default(true)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  company             Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  stockGroup          StockGroup?     @relation(fields: [stockGroupId], references: [id], onDelete: SetNull)
+  unit                Unit?           @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  hsnSac              HsnSac?         @relation(fields: [hsnSacId], references: [id], onDelete: SetNull)
+  stockMovements      StockMovement[]
+  invoiceItems        InvoiceItem[]
+
+  @@unique([companyId, sku])
+  @@unique([companyId, barcode])
+}
+
+model Voucher {
+  id                Int             @id @default(autoincrement())
+  companyId         Int
+  voucherNo         String
+  voucherType       VoucherType
+  voucherDate       DateTime
+  narration         String          @default("")
+  referenceNo       String?
+  sourceType        String?
+  sourceId          Int?
+  totalDebitPaisa   Int             @default(0)
+  totalCreditPaisa  Int             @default(0)
+  isPosted          Boolean         @default(true)
+  isDeleted         Boolean         @default(false)
+  createdById       Int?
+  updatedById       Int?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  company           Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  entries           VoucherEntry[]
+  invoices          Invoice[]
+  createdBy         User?           @relation("VoucherCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy         User?           @relation("VoucherUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@unique([companyId, voucherNo])
+  @@index([companyId, voucherType, voucherDate])
+}
+
+model VoucherEntry {
+  id            Int       @id @default(autoincrement())
+  voucherId     Int
+  ledgerId      Int
+  sortOrder     Int       @default(0)
+  debitPaisa    Int       @default(0)
+  creditPaisa   Int       @default(0)
+  narration     String    @default("")
+  createdAt     DateTime  @default(now())
+  voucher       Voucher   @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  ledger        Ledger    @relation(fields: [ledgerId], references: [id])
+
+  @@index([voucherId, sortOrder])
+  @@index([ledgerId])
+}
+
+model Invoice {
+  id                Int             @id @default(autoincrement())
+  companyId         Int
+  invoiceNo         String
+  invoiceDate       DateTime
+  invoiceType       InvoiceType
+  gstInvoiceType    String          @default("TAX_INVOICE")
+  partyLedgerId     Int
+  placeOfSupply     String          @default("")
+  isReverseCharge   Boolean         @default(false)
+  isDeleted         Boolean         @default(false)
+  subtotalPaisa     Int             @default(0)
+  discountPaisa     Int             @default(0)
+  taxablePaisa      Int             @default(0)
+  cgstPaisa         Int             @default(0)
+  sgstPaisa         Int             @default(0)
+  igstPaisa         Int             @default(0)
+  cessPaisa         Int             @default(0)
+  roundOffPaisa     Int             @default(0)
+  grandTotalPaisa   Int             @default(0)
+  voucherId         Int?            @unique
+  notes             String          @default("")
+  createdById       Int?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  company           Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  partyLedger       Ledger          @relation("InvoicePartyLedger", fields: [partyLedgerId], references: [id])
+  voucher           Voucher?        @relation(fields: [voucherId], references: [id], onDelete: SetNull)
+  items             InvoiceItem[]
+  stockMovements    StockMovement[]
+  createdBy         User?           @relation("InvoiceCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([companyId, invoiceNo])
+  @@index([companyId, invoiceDate, invoiceType])
+}
+
+model InvoiceItem {
+  id                Int       @id @default(autoincrement())
+  invoiceId         Int
+  itemId            Int?
+  sortOrder         Int       @default(0)
+  itemName          String
+  hsnSacCode        String
+  quantity          Decimal   @db.Decimal(18, 4)
+  unitPricePaisa    Int
+  discountPercent   Decimal   @db.Decimal(5, 2) @default(0)
+  discountPaisa     Int       @default(0)
+  taxableValuePaisa Int
+  cgstRate          Decimal   @db.Decimal(5, 2) @default(0)
+  sgstRate          Decimal   @db.Decimal(5, 2) @default(0)
+  igstRate          Decimal   @db.Decimal(5, 2) @default(0)
+  cessRate          Decimal   @db.Decimal(5, 2) @default(0)
+  cgstPaisa         Int       @default(0)
+  sgstPaisa         Int       @default(0)
+  igstPaisa         Int       @default(0)
+  cessPaisa         Int       @default(0)
+  totalPaisa        Int
+  createdAt         DateTime  @default(now())
+  invoice           Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  item              Item?     @relation(fields: [itemId], references: [id], onDelete: SetNull)
+
+  @@index([invoiceId, sortOrder])
+}
+
+model StockMovement {
+  id                 Int            @id @default(autoincrement())
+  companyId          Int
+  itemId             Int
+  voucherId          Int?
+  invoiceId          Int?
+  movementType       MovementType
+  movementDate       DateTime
+  quantity           Decimal        @db.Decimal(18, 4)
+  ratePaisa          Int
+  amountPaisa        Int
+  runningQty         Decimal        @db.Decimal(18, 4)
+  runningValuePaisa  Int
+  notes              String         @default("")
+  isDeleted          Boolean        @default(false)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  company            Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  item               Item           @relation(fields: [itemId], references: [id])
+  voucher            Voucher?       @relation(fields: [voucherId], references: [id], onDelete: SetNull)
+  invoice            Invoice?       @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, movementDate])
+  @@index([itemId, movementDate])
+}
+
+model Setting {
+  id         Int       @id @default(autoincrement())
+  scopeType  String    @default("GLOBAL")
+  scopeId    String    @default("GLOBAL")
+  key        String
+  value      Json
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([scopeType, scopeId, key])
+}
+
+model AuditLog {
+  id          Int       @id @default(autoincrement())
+  userId      Int?
+  companyId   Int?
+  action      String
+  entityType  String
+  entityId    String?
+  before      Json?
+  after       Json?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  company     Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+  @@index([userId, createdAt])
+}

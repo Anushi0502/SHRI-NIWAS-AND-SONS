@@ -10,7 +10,7 @@ def sample_service(tmp_path):
     service = AccountingService(tmp_path / "accounting.db")
     service.initialize()
     company_id = service.create_company(
-        name="Shreenivas & Sons",
+        name="Global Creative Services",
         address="",
         gst_number="",
         phone="",

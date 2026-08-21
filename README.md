@@ -1,4 +1,4 @@
-# Shreenivas & Sons Accounting
+# Global Creative Services Accounting
 
 Desktop accounting software for a local business workflow, built with Python 3, PyQt5, SQLite, openpyxl, and reportlab.
 
@@ -67,7 +67,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-On first launch, the app seeds a demo company named `Shreenivas & Sons` with sample ledgers and vouchers so the reports have live data immediately.
+On first launch, the app seeds a demo company named `Global Creative Services` with sample ledgers and vouchers so the reports have live data immediately.
 
 ## Sample Data
 
@@ -123,4 +123,3 @@ Run the full suite:
 ```bash
 pytest -v
 ```
-

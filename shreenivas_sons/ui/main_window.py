@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
     def __init__(self, service):
         super().__init__()
         self.service = service
-        self.setWindowTitle("Shreenivas & Sons Accounting")
+        self.setWindowTitle("Global Creative Services Accounting")
         self.resize(1440, 900)
         self.setStyleSheet(APP_STYLE)
 
@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
         sidebar_layout.setContentsMargins(18, 18, 18, 18)
         sidebar_layout.setSpacing(10)
 
-        brand_title = QLabel("Shreenivas & Sons")
+        brand_title = QLabel("Global Creative Services")
         brand_title.setObjectName("BrandTitle")
         brand_subtitle = QLabel("Accounting desktop app")
         brand_subtitle.setObjectName("BrandSubTitle")
@@ -146,4 +146,3 @@ class MainWindow(QMainWindow):
             refresh = getattr(page, "refresh", None)
             if callable(refresh):
                 refresh()
-

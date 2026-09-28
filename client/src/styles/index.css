@@ -4,13 +4,13 @@
 
 :root {
   color-scheme: light;
-  --gcs-ink: #132a2b;
-  --gcs-ink-soft: #355354;
-  --gcs-teal: #0f6b63;
-  --gcs-teal-bright: #27a58f;
-  --gcs-coral: #e6a67c;
-  --gcs-paper: #f5f8f4;
-  --gcs-border: #dce8e3;
+  --gcs-ink: #0b1b35;
+  --gcs-ink-soft: #4c5d76;
+  --gcs-teal: #124ba5;
+  --gcs-teal-bright: #2e6dd1;
+  --gcs-coral: #f3c744;
+  --gcs-paper: #f6f8fc;
+  --gcs-border: #d9e0ec;
 }
 
 html,
@@ -23,9 +23,9 @@ body {
   margin: 0;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
   background:
-    radial-gradient(circle at 8% 0%, rgba(39, 165, 143, 0.12), transparent 26rem),
-    radial-gradient(circle at 92% 8%, rgba(230, 166, 124, 0.11), transparent 24rem),
-    linear-gradient(180deg, #fbfdfb 0%, var(--gcs-paper) 55%, #edf4f0 100%);
+    radial-gradient(circle at 8% 0%, rgba(18, 75, 165, 0.12), transparent 26rem),
+    radial-gradient(circle at 92% 8%, rgba(243, 199, 68, 0.14), transparent 24rem),
+    linear-gradient(180deg, #fbfdff 0%, var(--gcs-paper) 55%, #edf2fb 100%);
   color: var(--gcs-ink);
 }
 
@@ -61,8 +61,8 @@ textarea {
 input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(15, 107, 99, 0.7);
-  box-shadow: 0 0 0 4px rgba(39, 165, 143, 0.13);
+  border-color: rgba(18, 75, 165, 0.7);
+  box-shadow: 0 0 0 4px rgba(46, 109, 209, 0.13);
 }
 
 input::placeholder,
@@ -75,7 +75,7 @@ input[type="checkbox"] {
 }
 
 ::selection {
-  background: rgba(39, 165, 143, 0.24);
+  background: rgba(46, 109, 209, 0.24);
 }
 
 @layer components {
@@ -86,18 +86,18 @@ input[type="checkbox"] {
     flex: 0 0 auto;
     place-items: center;
     overflow: hidden;
-    border: 1px solid rgba(15, 107, 99, 0.16);
+    border: 1px solid rgba(18, 75, 165, 0.24);
     border-radius: 14px;
-    background: linear-gradient(145deg, #e7f8ef, #fff8ef);
-    color: var(--gcs-teal);
-    box-shadow: 0 8px 20px rgba(15, 107, 99, 0.12);
+    background: linear-gradient(145deg, #0b2d68, #124ba5);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(7, 26, 51, 0.22);
   }
 
   .brand-mark img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    padding: 5px;
+    object-fit: cover;
+    padding: 0;
   }
 
   .brand-mark span {
@@ -114,7 +114,7 @@ input[type="checkbox"] {
 
   .brand-mark--inverse {
     border-color: rgba(255, 255, 255, 0.12);
-    background: linear-gradient(145deg, rgba(39, 165, 143, 0.24), rgba(230, 166, 124, 0.18));
+    background: linear-gradient(145deg, rgba(18, 75, 165, 0.36), rgba(243, 199, 68, 0.18));
     box-shadow: none;
   }
 
@@ -201,7 +201,7 @@ input[type="checkbox"] {
 @media (max-width: 1023px) {
   body {
     background:
-      radial-gradient(circle at 0 0, rgba(39, 165, 143, 0.1), transparent 18rem),
-      linear-gradient(180deg, #fbfdfb 0%, var(--gcs-paper) 100%);
+      radial-gradient(circle at 0 0, rgba(18, 75, 165, 0.1), transparent 18rem),
+      linear-gradient(180deg, #fbfdff 0%, var(--gcs-paper) 100%);
   }
 }

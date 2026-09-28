@@ -8,7 +8,7 @@ import ChartPanel from "../components/ChartPanel";
 import DataTable from "../components/DataTable";
 import PageHeader from "../components/PageHeader";
 
-const PIE_COLORS = ["#16a67c", "#0f172a", "#7c3aed", "#f59e0b", "#0ea5e9"];
+const PIE_COLORS = ["#124ba5", "#0b1b35", "#f3c744", "#7c3aed", "#2e6dd1"];
 
 export default function DashboardPage() {
   const { activeCompany } = useCompany();
@@ -79,8 +79,8 @@ export default function DashboardPage() {
                 <YAxis tick={{ fill: "#64748b", fontSize: 12 }} />
                 <Tooltip formatter={(value) => formatMoney(Number(value) * 100)} />
                 <Legend />
-                <Line type="monotone" dataKey="salesPaisa" name="Sales" stroke="#16a67c" strokeWidth={3} />
-                <Line type="monotone" dataKey="purchasePaisa" name="Purchases" stroke="#0f172a" strokeWidth={3} />
+                <Line type="monotone" dataKey="salesPaisa" name="Sales" stroke="#124ba5" strokeWidth={3} />
+                <Line type="monotone" dataKey="purchasePaisa" name="Purchases" stroke="#0b1b35" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </div>

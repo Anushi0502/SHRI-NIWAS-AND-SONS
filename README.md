@@ -1,20 +1,24 @@
-# Global Creative Services Accounting
+# VS Store Accounts
 
-Single-page accounting demo built with React and Vite.
+Single-page accounting workspace built with React and Vite for VS Store and Shreenivas & Sons.
 
 ## Features
 
 - Company management
 - Ledgers and vouchers
 - Invoices and inventory
-- US sales tax settings
+- Sales tax settings
 - Reports and dashboard views
 - Browser-persisted demo data
+- VS Store navy, royal blue, and gold branding
 
 ## Project Structure
 
 ```text
 client/
+  public/
+    vs-store-lockup.png
+    vs-store-mark.png
   src/
     api/
     components/
@@ -38,4 +42,5 @@ npm install
 ```bash
 npm run dev
 ```
+
 The demo data is stored in browser local storage and resets automatically if storage is cleared.

@@ -89,7 +89,7 @@ function SidebarContent({ onClose }) {
         </div>
       </div>
       <NavItems onNavigate={onClose} />
-      <div className="border-t border-white/10 px-5 py-4 text-xs leading-5 text-slate-500">Clear books. Practical decisions. Built for the GCS team.</div>
+      <div className="border-t border-white/10 px-5 py-4 text-xs leading-5 text-slate-500">Clear books. Practical decisions. Built for the VS Store team.</div>
     </>
   );
 }
@@ -97,12 +97,12 @@ function SidebarContent({ onClose }) {
 export default function Sidebar({ mobileOpen = false, onClose = () => {} }) {
   return (
     <>
-      <aside className="hidden w-[276px] shrink-0 flex-col bg-[#132a2b] text-slate-100 lg:flex">
+      <aside className="hidden w-[276px] shrink-0 flex-col bg-[#071a33] text-slate-100 lg:flex">
         <SidebarContent />
       </aside>
       {mobileOpen ? (
-        <div className="fixed inset-0 z-50 bg-[#102526]/55 lg:hidden" onClick={onClose}>
-          <aside className="flex h-full w-[min(86vw,340px)] flex-col bg-[#132a2b] text-slate-100 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <div className="fixed inset-0 z-50 bg-[#071a33]/55 lg:hidden" onClick={onClose}>
+          <aside className="flex h-full w-[min(86vw,340px)] flex-col bg-[#071a33] text-slate-100 shadow-2xl" onClick={(event) => event.stopPropagation()}>
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
               <BrandMark inverse compact />
               <button type="button" onClick={onClose} aria-label="Close navigation" className="rounded-xl p-2 text-slate-300 hover:bg-white/10 hover:text-white">

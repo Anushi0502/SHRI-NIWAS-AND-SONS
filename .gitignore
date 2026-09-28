@@ -22,3 +22,6 @@ server/prisma/*.db-journal
 server/backups/
 backups/
 .superpowers/
+*.DS_Store
+frontend/node_modules/
+frontend/dist/

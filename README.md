@@ -1,6 +1,6 @@
-# VS Store Accounts
+# VS Accounts
 
-Single-page accounting workspace built with React and Vite for VS Store and Shreenivas & Sons.
+Single-page accounting workspace built with React and Vite for VS and Shreenivas & Sons.
 
 ## Features
 
@@ -10,15 +10,14 @@ Single-page accounting workspace built with React and Vite for VS Store and Shre
 - Sales tax settings
 - Reports and dashboard views
 - Browser-persisted demo data
-- VS Store navy, royal blue, and gold branding
+- VS navy, royal blue, and gold branding
 
 ## Project Structure
 
 ```text
 client/
   public/
-    vs-store-lockup.png
-    vs-store-mark.png
+    vs-mark.png
   src/
     api/
     components/

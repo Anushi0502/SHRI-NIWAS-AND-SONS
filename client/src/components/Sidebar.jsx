@@ -89,7 +89,7 @@ function SidebarContent({ onClose }) {
         </div>
       </div>
       <NavItems onNavigate={onClose} />
-      <div className="border-t border-white/10 px-5 py-4 text-xs leading-5 text-slate-500">Clear books. Practical decisions. Built for the VS Store team.</div>
+      <div className="border-t border-white/10 px-5 py-4 text-xs leading-5 text-slate-500">Clear books. Practical decisions. Built for the VS team.</div>
     </>
   );
 }

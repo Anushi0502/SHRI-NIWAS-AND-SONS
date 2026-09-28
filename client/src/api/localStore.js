@@ -1,9 +1,9 @@
-const STORAGE_KEY = "vs-store-demo-state";
+const STORAGE_KEY = "vs-demo-state";
 
 const demoUsers = [
-  { id: "u1", name: "Admin User", email: "admin@vsstore.local", password: "Admin@12345", role: "ADMIN" },
-  { id: "u2", name: "Accountant User", email: "accountant@vsstore.local", password: "Accountant@12345", role: "ACCOUNTANT" },
-  { id: "u3", name: "Viewer User", email: "viewer@vsstore.local", password: "Viewer@12345", role: "VIEWER" },
+  { id: "u1", name: "Admin User", email: "admin@vs.local", password: "Admin@12345", role: "ADMIN" },
+  { id: "u2", name: "Accountant User", email: "accountant@vs.local", password: "Accountant@12345", role: "ACCOUNTANT" },
+  { id: "u3", name: "Viewer User", email: "viewer@vs.local", password: "Viewer@12345", role: "VIEWER" },
 ];
 
 function nowIso() {
@@ -19,7 +19,7 @@ function createSeedState() {
     companies: [
       {
         id: companyId,
-        name: "VS Store",
+        name: "VS",
         address: "",
         phone: "",
         email: "",

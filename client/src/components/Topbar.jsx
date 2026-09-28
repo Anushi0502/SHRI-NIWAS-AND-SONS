@@ -17,7 +17,7 @@ export default function Topbar({ onOpenMenu }) {
           <BrandMark compact className="lg:hidden" />
           <div className="hidden min-w-0 sm:block">
             <div className="text-[10px] font-bold uppercase tracking-[0.23em] text-accent-700">{user?.role || "USER"} workspace</div>
-            <div className="truncate text-sm text-slate-500">Practical finance operations for the VS team</div>
+            <div className="truncate text-sm text-slate-500">Practical finance operations for the VS Associates team</div>
           </div>
         </div>
 

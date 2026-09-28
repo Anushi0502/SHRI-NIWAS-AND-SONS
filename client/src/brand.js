@@ -1,10 +1,10 @@
 export const brand = {
-  name: "VS",
-  legalName: "VS",
+  name: "VS Associates",
+  legalName: "VS Associates",
   shortName: "VS",
-  tagline: "Clear books. Practical decisions. Built for the team.",
+  tagline: "Clear books. Practical decisions. Built for the VS Associates team.",
   logoUrl: "/vs-mark.png",
   websiteUrl: "/",
   canonicalUrl: "/",
-  headOffice: "Shreenivas & Sons",
+  headOffice: "VS Associates",
 };

@@ -28,7 +28,7 @@ export default function LoginPage() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: "admin@vs.local", password: "Admin@12345" },
+    defaultValues: { email: "admin@vsassociates.local", password: "Admin@12345" },
   });
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function LoginPage() {
           <div className="mt-24 max-w-2xl">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-100">
               <ShieldCheck className="h-4 w-4 text-[#f3c744]" />
-              VS operations workspace
+              VS Associates operations workspace
             </div>
             <h1 className="max-w-xl font-serif text-5xl font-semibold leading-[1.05] tracking-[-0.05em] xl:text-6xl">
               Keep the numbers clear. Keep the team moving.
@@ -80,7 +80,7 @@ export default function LoginPage() {
             <div className="mb-8">
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#edf2fb] text-[#124ba5]"><LockKeyhole className="h-5 w-5" /></div>
               <h2 className="font-serif text-4xl font-semibold tracking-[-0.05em] text-slate-950">Welcome back</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-500">Sign in to continue to your VS workspace.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-500">Sign in to continue to your VS Associates workspace.</p>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -101,7 +101,7 @@ export default function LoginPage() {
 
             <div className="mt-6 rounded-2xl border border-[#d9e0ec] bg-[#f4f7fd] p-4 text-xs leading-5 text-slate-600">
               <div className="font-semibold text-[#124ba5]">Demo access</div>
-              <div className="mt-1">admin@vs.local / Admin@12345</div>
+              <div className="mt-1">admin@vsassociates.local / Admin@12345</div>
               <div>Accountant and viewer accounts are also available in the demo.</div>
             </div>
           </div>

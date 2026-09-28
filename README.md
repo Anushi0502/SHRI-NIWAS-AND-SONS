@@ -1,6 +1,6 @@
-# VS Accounts
+# VS Associates Accounts
 
-Single-page accounting workspace built with React and Vite for VS and Shreenivas & Sons.
+Single-page accounting workspace built with React and Vite for VS Associates.
 
 ## Features
 
@@ -10,7 +10,7 @@ Single-page accounting workspace built with React and Vite for VS and Shreenivas
 - Sales tax settings
 - Reports and dashboard views
 - Browser-persisted demo data
-- VS navy, royal blue, and gold branding
+- VS Associates navy, royal blue, and gold branding
 
 ## Project Structure
 

@@ -4,13 +4,13 @@
 
 :root {
   color-scheme: light;
-  --gcs-ink: #0b1b35;
-  --gcs-ink-soft: #4c5d76;
-  --gcs-teal: #124ba5;
-  --gcs-teal-bright: #2e6dd1;
-  --gcs-coral: #f3c744;
-  --gcs-paper: #f6f8fc;
-  --gcs-border: #d9e0ec;
+  --vs-ink: #0b1b35;
+  --vs-ink-soft: #4c5d76;
+  --vs-blue: #124ba5;
+  --vs-blue-bright: #2e6dd1;
+  --vs-gold: #f3c744;
+  --vs-paper: #f6f8fc;
+  --vs-border: #d9e0ec;
 }
 
 html,
@@ -25,8 +25,8 @@ body {
   background:
     radial-gradient(circle at 8% 0%, rgba(18, 75, 165, 0.12), transparent 26rem),
     radial-gradient(circle at 92% 8%, rgba(243, 199, 68, 0.14), transparent 24rem),
-    linear-gradient(180deg, #fbfdff 0%, var(--gcs-paper) 55%, #edf2fb 100%);
-  color: var(--gcs-ink);
+    linear-gradient(180deg, #fbfdff 0%, var(--vs-paper) 55%, #edf2fb 100%);
+  color: var(--vs-ink);
 }
 
 * {
@@ -52,9 +52,9 @@ input:not([type="checkbox"]):not([type="radio"]),
 select,
 textarea {
   min-height: 44px;
-  border-color: var(--gcs-border);
+  border-color: var(--vs-border);
   background-color: rgba(255, 255, 255, 0.9);
-  color: var(--gcs-ink);
+  color: var(--vs-ink);
   transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
 }
 
@@ -71,7 +71,7 @@ textarea::placeholder {
 }
 
 input[type="checkbox"] {
-  accent-color: var(--gcs-teal);
+  accent-color: var(--vs-blue);
 }
 
 ::selection {
@@ -145,13 +145,13 @@ input[type="checkbox"] {
     width: 3px;
     height: 22px;
     border-radius: 999px;
-    background: var(--gcs-coral);
+    background: var(--vs-gold);
     content: "";
   }
 
   .surface-card {
     min-width: 0;
-    border-color: var(--gcs-border);
+    border-color: var(--vs-border);
     border-radius: 20px;
     box-shadow: 0 14px 40px rgba(19, 42, 43, 0.065);
   }
@@ -162,7 +162,7 @@ input[type="checkbox"] {
     height: 4px;
     margin-bottom: 12px;
     border-radius: 999px;
-    background: linear-gradient(90deg, var(--gcs-teal), var(--gcs-coral));
+    background: linear-gradient(90deg, var(--vs-blue), var(--vs-gold));
     content: "";
   }
 
@@ -173,7 +173,7 @@ input[type="checkbox"] {
 
   .data-table-shell {
     min-width: 0;
-    border-color: var(--gcs-border);
+    border-color: var(--vs-border);
     border-radius: 20px;
     box-shadow: 0 14px 40px rgba(19, 42, 43, 0.055);
   }
@@ -202,6 +202,6 @@ input[type="checkbox"] {
   body {
     background:
       radial-gradient(circle at 0 0, rgba(18, 75, 165, 0.1), transparent 18rem),
-      linear-gradient(180deg, #fbfdff 0%, var(--gcs-paper) 100%);
+      linear-gradient(180deg, #fbfdff 0%, var(--vs-paper) 100%);
   }
 }

@@ -9,7 +9,7 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Settings" subtitle="Session, company, and GCS workspace details." />
+      <PageHeader title="Settings" subtitle="Session, company, and VS Store workspace details." />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <div className="surface-card rounded-2xl border border-slate-200 bg-white p-5">
@@ -29,11 +29,11 @@ export default function SettingsPage() {
           </div>
         </div>
         <div className="surface-card rounded-2xl border border-slate-200 bg-white p-5">
-          <h3 className="text-lg font-semibold text-slate-950">GCS Workspace</h3>
+          <h3 className="text-lg font-semibold text-slate-950">VS Store Workspace</h3>
           <div className="mt-4 space-y-2 text-sm text-slate-600">
             <div>{brand.legalName}</div>
             <div>{brand.tagline}</div>
-            <a className="font-semibold text-accent-700 hover:text-accent-900" href={brand.websiteUrl} target="_blank" rel="noreferrer">Visit gcsrvllc.com</a>
+            <a className="font-semibold text-accent-700 hover:text-accent-900" href={brand.websiteUrl}>Open VS Store home</a>
             <div className="pt-2 text-xs text-slate-500">{brand.headOffice}</div>
           </div>
         </div>
